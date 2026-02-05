@@ -18,4 +18,13 @@ Lightweight & Secure PDF Viewer.
 
 ---
 
+## 🌐 TransLayer3776
+Real-time AI Translation Overlay.
+
+* [Privacy Policy (プライバシーポリシー)](translayer3776/privacy-policy)
+* [Open Source Licenses (OSSライセンス)](translayer3776/oss-licenses)
+
+
+---
+
 &copy; Lab 3776
