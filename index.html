@@ -6,328 +6,400 @@
   <title>Lab 3776 Applications</title>
   <meta name="description" content="Official documentation and download links for Lab 3776 applications.">
   <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+    
     :root {
-      --bg: #f3efe6;
-      --paper: rgba(255, 251, 243, 0.92);
-      --ink: #1f2933;
-      --muted: #5f6c76;
-      --line: rgba(31, 41, 51, 0.12);
-      --brand: #0e7490;
-      --brand-strong: #155e75;
-      --accent: #d97706;
-      --shadow: 0 24px 60px rgba(31, 41, 51, 0.12);
-      --radius: 28px;
-      --radius-sm: 16px;
+      --bg: #121212;
+      --surface: #1e1e1e;
+      --surface-glass: rgba(30, 30, 30, 0.6);
+      --border-glass: rgba(255, 255, 255, 0.08);
+      --text: #ffffff;
+      --text-muted: #a0a0a0;
+      --primary: #3b82f6;
+      --primary-hover: #2563eb;
+      --accent: #10b981;
+      --danger: #ef4444;
+      --card-radius: 20px;
+      --btn-radius: 12px;
+      --font-family: 'Inter', sans-serif;
     }
 
     * {
       box-sizing: border-box;
+      margin: 0;
+      padding: 0;
     }
 
     body {
-      margin: 0;
-      font-family: Georgia, "Times New Roman", serif;
-      color: var(--ink);
-      background:
-        radial-gradient(circle at top left, rgba(14, 116, 144, 0.14), transparent 28%),
-        radial-gradient(circle at top right, rgba(217, 119, 6, 0.12), transparent 24%),
-        linear-gradient(180deg, #f8f4eb 0%, var(--bg) 100%);
+      font-family: var(--font-family);
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      background-image: 
+        radial-gradient(circle at 15% 50%, rgba(59, 130, 246, 0.08), transparent 25%),
+        radial-gradient(circle at 85% 30%, rgba(16, 185, 129, 0.06), transparent 25%);
+      background-attachment: fixed;
+      min-height: 100vh;
+      overflow-x: hidden;
     }
 
     a {
-      color: inherit;
       text-decoration: none;
+      color: inherit;
     }
 
-    .page {
-      width: min(1120px, calc(100% - 32px));
-      margin: 0 auto;
-      padding: 32px 0 56px;
-    }
-
-    .hero {
-      position: relative;
-      overflow: hidden;
-      padding: 40px;
-      border: 1px solid var(--line);
-      border-radius: 36px;
-      background: linear-gradient(135deg, rgba(255, 251, 243, 0.96), rgba(244, 240, 233, 0.92));
-      box-shadow: var(--shadow);
-    }
-
-    .hero::before {
-      content: "";
-      position: absolute;
-      inset: auto -40px -60px auto;
-      width: 260px;
-      height: 260px;
-      border-radius: 50%;
-      background: radial-gradient(circle, rgba(14, 116, 144, 0.18), transparent 70%);
-      pointer-events: none;
-    }
-
-    .eyebrow {
-      display: inline-block;
-      padding: 8px 12px;
-      border-radius: 999px;
-      background: rgba(14, 116, 144, 0.1);
-      color: var(--brand-strong);
-      font-size: 12px;
-      font-weight: 700;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-    }
-
-    h1 {
-      margin: 18px 0 12px;
-      font-size: clamp(40px, 6vw, 70px);
-      line-height: 0.95;
-      letter-spacing: -0.04em;
-      max-width: 10ch;
-    }
-
-    .hero p {
-      margin: 0;
-      max-width: 48rem;
-      font-size: 18px;
-      line-height: 1.7;
-      color: var(--muted);
-    }
-
-    .hero-note {
-      margin-top: 18px;
-      color: #7b8790;
-      font-size: 14px;
-      font-style: italic;
-    }
-
-    .section-head {
+    /* Header & i18n Switcher */
+    .header {
       display: flex;
       justify-content: space-between;
-      gap: 20px;
-      align-items: end;
-      margin: 34px 0 18px;
+      align-items: center;
+      padding: 24px 5%;
+      max-width: 1200px;
+      margin: 0 auto;
     }
 
-    .section-head h2 {
-      margin: 0;
-      font-size: clamp(28px, 4vw, 40px);
+    .brand {
+      font-size: 1.25rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      background: linear-gradient(135deg, #fff, #a0a0a0);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .lang-switcher {
+      background: var(--surface-glass);
+      backdrop-filter: blur(8px);
+      border: 1px solid var(--border-glass);
+      color: var(--text);
+      padding: 8px 16px;
+      border-radius: 9999px;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 0.875rem;
+      transition: all 0.2s ease;
+    }
+
+    .lang-switcher:hover {
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    /* Hero Section */
+    .hero {
+      text-align: center;
+      padding: 80px 20px;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .hero h1 {
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      line-height: 1.1;
+      margin-bottom: 24px;
       letter-spacing: -0.03em;
     }
 
-    .section-head p {
-      margin: 0;
-      max-width: 34rem;
-      color: var(--muted);
-      line-height: 1.6;
+    .hero p {
+      font-size: clamp(1rem, 2vw, 1.25rem);
+      color: var(--text-muted);
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    /* Grid Layout */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 5% 80px;
+    }
+
+    .section-title {
+      font-size: 2rem;
+      font-weight: 600;
+      margin-bottom: 32px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--border-glass);
     }
 
     .grid {
       display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 18px;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 24px;
     }
 
+    /* Glass Card */
     .card {
+      background: var(--surface-glass);
+      border: 1px solid var(--border-glass);
+      border-radius: var(--card-radius);
+      padding: 32px;
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s ease, border-color 0.3s ease;
       display: flex;
       flex-direction: column;
-      gap: 18px;
-      padding: 24px;
-      border: 1px solid var(--line);
-      border-radius: var(--radius);
-      background: var(--paper);
-      box-shadow: 0 16px 40px rgba(31, 41, 51, 0.08);
-      backdrop-filter: blur(10px);
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
+      border-color: rgba(255, 255, 255, 0.2);
     }
 
     .card.featured {
-      grid-column: span 3;
-      padding: 30px;
-      background:
-        linear-gradient(135deg, rgba(14, 116, 144, 0.08), rgba(255, 251, 243, 0.96) 35%),
-        var(--paper);
+      grid-column: 1 / -1;
+      background: linear-gradient(145deg, rgba(30, 30, 30, 0.8), rgba(20, 20, 20, 0.9));
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .card.featured::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; width: 100%; height: 2px;
+      background: linear-gradient(90deg, var(--primary), var(--accent));
     }
 
-    .card-top {
+    .card-header {
       display: flex;
       justify-content: space-between;
-      gap: 12px;
-      align-items: start;
+      align-items: flex-start;
+      margin-bottom: 16px;
+    }
+
+    .app-title {
+      font-size: 1.5rem;
+      font-weight: 700;
+    }
+
+    .featured .app-title {
+      font-size: 2rem;
     }
 
     .badge {
-      padding: 7px 10px;
-      border-radius: 999px;
-      background: rgba(217, 119, 6, 0.12);
-      color: #9a5b00;
-      font-size: 12px;
+      background: rgba(16, 185, 129, 0.1);
+      color: var(--accent);
+      padding: 4px 12px;
+      border-radius: 9999px;
+      font-size: 0.75rem;
       font-weight: 700;
       text-transform: uppercase;
-      letter-spacing: 0.08em;
+      letter-spacing: 0.05em;
+      border: 1px solid rgba(16, 185, 129, 0.2);
       white-space: nowrap;
     }
 
-    .app-name {
-      margin: 0;
-      font-size: 30px;
-      line-height: 1;
-      letter-spacing: -0.03em;
+    .badge.windows {
+      background: rgba(59, 130, 246, 0.1);
+      color: var(--primary);
+      border: 1px solid rgba(59, 130, 246, 0.2);
     }
 
-    .app-tagline {
-      margin: 8px 0 0;
-      color: var(--muted);
-      line-height: 1.6;
-      font-size: 16px;
+    .app-desc {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      margin-bottom: 32px;
+      flex-grow: 1;
     }
 
-    .links {
+    /* Buttons */
+    .btn-group {
       display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
+      flex-direction: column;
+      gap: 12px;
     }
 
-    .button {
+    .btn-row {
+      display: flex;
+      gap: 12px;
+    }
+
+    .btn {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      min-height: 44px;
-      padding: 0 16px;
-      border-radius: 999px;
+      padding: 12px 20px;
+      border-radius: var(--btn-radius);
+      font-size: 0.9rem;
+      font-weight: 600;
+      transition: all 0.2s ease;
+      cursor: pointer;
+      text-align: center;
       border: 1px solid transparent;
-      font-size: 14px;
-      font-weight: 700;
-      transition: transform 120ms ease, box-shadow 120ms ease, border-color 120ms ease;
+      flex: 1;
     }
 
-    .button:hover {
-      transform: translateY(-1px);
+    .btn:active {
+      transform: scale(0.98);
     }
 
-    .button.primary {
-      background: var(--brand);
+    .btn-primary {
+      background: var(--text);
+      color: var(--bg);
+    }
+
+    .btn-primary:hover {
+      background: #e2e8f0;
+      box-shadow: 0 0 16px rgba(255, 255, 255, 0.2);
+    }
+
+    .btn-win {
+      background: var(--primary);
       color: white;
-      box-shadow: 0 10px 24px rgba(14, 116, 144, 0.24);
+    }
+    
+    .btn-win:hover {
+      background: var(--primary-hover);
+      box-shadow: 0 0 16px rgba(59, 130, 246, 0.4);
     }
 
-    .button.secondary {
-      background: rgba(255, 255, 255, 0.82);
-      border-color: rgba(31, 41, 51, 0.14);
-      color: var(--ink);
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--text-muted);
+      border-color: var(--border-glass);
     }
 
-    .footer {
-      margin-top: 34px;
-      padding-top: 18px;
-      border-top: 1px solid var(--line);
-      color: #7b8790;
-      font-size: 14px;
-      display: flex;
-      justify-content: space-between;
-      gap: 16px;
-      flex-wrap: wrap;
+    .btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.1);
+      color: var(--text);
     }
 
-    @media (max-width: 900px) {
-      .grid {
-        grid-template-columns: 1fr;
-      }
+    footer {
+      text-align: center;
+      padding: 40px;
+      border-top: 1px solid var(--border-glass);
+      color: var(--text-muted);
+      font-size: 0.875rem;
+    }
 
-      .card.featured {
-        grid-column: span 1;
-      }
-
-      .section-head {
+    @media (max-width: 768px) {
+      .btn-row {
         flex-direction: column;
-        align-items: start;
-      }
-    }
-
-    @media (max-width: 640px) {
-      .page {
-        width: min(100% - 20px, 1120px);
-        padding-top: 20px;
-      }
-
-      .hero,
-      .card {
-        padding: 22px;
-      }
-
-      h1 {
-        max-width: none;
       }
     }
   </style>
 </head>
 <body>
-  <main class="page">
+
+  <header class="header">
+    <div class="brand">Lab 3776</div>
+    <button class="lang-switcher" id="langToggle">🌐 EN</button>
+  </header>
+
+  <main>
     <section class="hero">
-      <div class="eyebrow">Lab 3776</div>
-      <h1>Applications, Policies, Downloads</h1>
-      <p>
-        Official portal for Lab 3776 Android apps. Find Google Play downloads, privacy policies,
-        and open source license pages in one place.
-      </p>
-      <div class="hero-note">Designed in Tokyo</div>
+      <h1 data-ja="ソフトウェア＆ツール" data-en="Software & Tools">Software & Tools</h1>
+      <p data-ja="Lab 3776が開発するアプリケーションの公式配布サイト。ダウンロードやポリシー情報を確認できます。" data-en="The official portal for applications developed by Lab 3776. Find downloads, privacy policies, and documentation.">The official portal for applications developed by Lab 3776. Find downloads, privacy policies, and documentation.</p>
     </section>
 
-    <section aria-labelledby="apps-title">
-      <div class="section-head">
-        <div>
-          <h2 id="apps-title">Applications</h2>
-        </div>
-        <p>
-          TransLayer 3776 is featured first. Unreleased apps are intentionally not listed here.
-        </p>
+    <div class="container">
+      <h2 class="section-title" data-ja="Windows アプリケーション" data-en="Windows Applications">Windows Applications</h2>
+      <div class="grid" style="margin-bottom: 64px;">
+        <article class="card">
+          <div class="card-header">
+            <h3 class="app-title">Viewer3776win</h3>
+            <span class="badge windows">Windows</span>
+          </div>
+          <p class="app-desc" data-ja="Windows標準機能だけで構築された、超軽量で汎用性の高いファイルビューア。画像、PDF、動画、音声、HTML、RTFなど多種多様なフォーマットを単一の実行ファイルで瞬時に開くことができます。インストール不要で動作します。" data-en="An ultra-lightweight, versatile file viewer built using standard Windows APIs. Instantly open images, PDFs, media, HTML, RTF, and more with a single standalone executable. No installation required.">An ultra-lightweight, versatile file viewer built using standard Windows APIs. Instantly open images, PDFs, media, HTML, RTF, and more with a single standalone executable. No installation required.</p>
+          <div class="btn-group">
+            <a href="viewer3776win/Viewer3776win.zip" class="btn btn-win" data-ja="ダウンロード (.zip)" data-en="Download (.zip)">Download (.zip)</a>
+            <div class="btn-row">
+              <a href="viewer3776win/privacy-policy.html" class="btn btn-secondary" data-ja="プライバシーポリシー" data-en="Privacy Policy">Privacy Policy</a>
+              <a href="viewer3776win/oss-licenses.html" class="btn btn-secondary" data-ja="OSS ライセンス" data-en="OSS Licenses">OSS Licenses</a>
+            </div>
+          </div>
+        </article>
       </div>
 
+      <h2 class="section-title" data-ja="Android アプリケーション" data-en="Android Applications">Android Applications</h2>
       <div class="grid">
         <article class="card featured">
-          <div class="card-top">
-            <div>
-              <h3 class="app-name">TransLayer 3776</h3>
-              <p class="app-tagline">Real-time AI translation overlay for on-screen content.</p>
+          <div class="card-header">
+            <h3 class="app-title">TransLayer 3776</h3>
+            <span class="badge">Featured</span>
+          </div>
+          <p class="app-desc" data-ja="画面上のテキストをリアルタイムでAI翻訳し、オーバーレイ表示する強力なアシスタントツール。海外ゲームのプレイや、外国語アプリの利用時に画面上の文字をそのまま翻訳して被せて表示します。" data-en="A powerful assistant tool that translates on-screen text in real-time using AI and displays it as an overlay. Perfect for playing foreign games or using apps in other languages without losing context.">A powerful assistant tool that translates on-screen text in real-time using AI and displays it as an overlay. Perfect for playing foreign games or using apps in other languages without losing context.</p>
+          <div class="btn-group">
+            <a href="https://play.google.com/store/apps/details?id=com.lab3776.translayer3776&amp;pcampaignid=web_share" class="btn btn-primary" data-ja="Google Play で取得" data-en="Get on Google Play">Get on Google Play</a>
+            <div class="btn-row">
+              <a href="translayer3776/privacy-policy.html" class="btn btn-secondary" data-ja="プライバシーポリシー" data-en="Privacy Policy">Privacy Policy</a>
+              <a href="translayer3776/oss-licenses.html" class="btn btn-secondary" data-ja="OSS ライセンス" data-en="OSS Licenses">OSS Licenses</a>
             </div>
-            <div class="badge">Featured</div>
-          </div>
-          <div class="links">
-            <a class="button primary" href="https://play.google.com/store/apps/details?id=com.lab3776.translayer3776&amp;pcampaignid=web_share">Download on Google Play</a>
-            <a class="button secondary" href="translayer3776/privacy-policy.html">Privacy Policy</a>
-            <a class="button secondary" href="translayer3776/oss-licenses.html">OSS Licenses</a>
           </div>
         </article>
 
         <article class="card">
-          <div>
-            <h3 class="app-name">QR3776</h3>
-            <p class="app-tagline">Simple and fast QR code reader.</p>
+          <div class="card-header">
+            <h3 class="app-title">QR3776</h3>
+            <span class="badge">Android</span>
           </div>
-          <div class="links">
-            <a class="button primary" href="https://play.google.com/store/apps/details?id=com.lab3776.qr3776&amp;pcampaignid=web_share">Download on Google Play</a>
-            <a class="button secondary" href="qr3776/privacy-policy.html">Privacy Policy</a>
-            <a class="button secondary" href="qr3776/oss-licenses.html">OSS Licenses</a>
+          <p class="app-desc" data-ja="無駄を一切省いた、シンプルで高速なQRコードリーダー。必要な時にすぐに起動し、迷うことなく読み取ることができます。" data-en="A simple, lightning-fast QR code reader stripped of all unnecessary features. Opens instantly when you need it, scanning without hesitation.">A simple, lightning-fast QR code reader stripped of all unnecessary features. Opens instantly when you need it, scanning without hesitation.</p>
+          <div class="btn-group">
+            <a href="https://play.google.com/store/apps/details?id=com.lab3776.qr3776&amp;pcampaignid=web_share" class="btn btn-primary" data-ja="Google Play で取得" data-en="Get on Google Play">Get on Google Play</a>
+            <div class="btn-row">
+              <a href="qr3776/privacy-policy.html" class="btn btn-secondary" data-ja="プライバシーポリシー" data-en="Privacy Policy">Privacy Policy</a>
+              <a href="qr3776/oss-licenses.html" class="btn btn-secondary" data-ja="OSS ライセンス" data-en="OSS Licenses">OSS Licenses</a>
+            </div>
           </div>
         </article>
 
         <article class="card">
-          <div>
-            <h3 class="app-name">Resizer 3776</h3>
-            <p class="app-tagline">Quick image resizing with a lightweight workflow.</p>
+          <div class="card-header">
+            <h3 class="app-title">Resizer 3776</h3>
+            <span class="badge">Android</span>
           </div>
-          <div class="links">
-            <a class="button primary" href="https://play.google.com/store/apps/details?id=com.lab3776.resizer3776&amp;pcampaignid=web_share">Download on Google Play</a>
-            <a class="button secondary" href="resizer3776/privacy-policy.html">Privacy Policy</a>
-            <a class="button secondary" href="resizer3776/oss-licenses.html">OSS Licenses</a>
+          <p class="app-desc" data-ja="画像のリサイズだけに特化した軽量アプリ。SNSへのアップロード前や容量節約のために、数タップで素早くサイズを変更できます。" data-en="A lightweight application dedicated solely to image resizing. Quickly change dimensions in a few taps before uploading to social media or to save space.">A lightweight application dedicated solely to image resizing. Quickly change dimensions in a few taps before uploading to social media or to save space.</p>
+          <div class="btn-group">
+            <a href="https://play.google.com/store/apps/details?id=com.lab3776.resizer3776&amp;pcampaignid=web_share" class="btn btn-primary" data-ja="Google Play で取得" data-en="Get on Google Play">Get on Google Play</a>
+            <div class="btn-row">
+              <a href="resizer3776/privacy-policy.html" class="btn btn-secondary" data-ja="プライバシーポリシー" data-en="Privacy Policy">Privacy Policy</a>
+              <a href="resizer3776/oss-licenses.html" class="btn btn-secondary" data-ja="OSS ライセンス" data-en="OSS Licenses">OSS Licenses</a>
+            </div>
           </div>
         </article>
       </div>
-    </section>
-
-    <footer class="footer">
-      <span>&copy; Lab 3776</span>
-      <span>Official documentation and policy portal</span>
-    </footer>
+    </div>
   </main>
+
+  <footer>
+    <p>&copy; Lab 3776. All rights reserved.</p>
+  </footer>
+
+  <script>
+    (function(){
+      const toggleBtn = document.getElementById('langToggle');
+      const elements = document.querySelectorAll('[data-en][data-ja]');
+      
+      // Auto detect user language, default to 'en', but use localStorage if set
+      let currentLang = localStorage.getItem('lab3776_lang');
+      if(!currentLang) {
+        currentLang = navigator.language.startsWith('ja') ? 'ja' : 'en';
+      }
+
+      function updateLanguage(lang) {
+        elements.forEach(el => {
+          el.textContent = el.getAttribute(`data-${lang}`);
+        });
+        toggleBtn.textContent = lang === 'ja' ? '🌐 JP' : '🌐 EN';
+        document.documentElement.lang = lang;
+      }
+
+      // Initialize
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', () => updateLanguage(currentLang));
+      } else {
+        updateLanguage(currentLang);
+      }
+
+      // Toggle event
+      toggleBtn.addEventListener('click', () => {
+        currentLang = currentLang === 'en' ? 'ja' : 'en';
+        localStorage.setItem('lab3776_lang', currentLang);
+        updateLanguage(currentLang);
+      });
+    })();
+  </script>
 </body>
 </html>
