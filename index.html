@@ -128,6 +128,10 @@
       gap: 24px;
     }
 
+    .grid-two {
+      grid-template-columns: repeat(2, minmax(320px, 1fr));
+    }
+
     /* Glass Card */
     .card {
       background: var(--surface-glass);
@@ -149,7 +153,6 @@
     }
 
     .card.featured {
-      grid-column: 1 / -1;
       background: linear-gradient(145deg, rgba(30, 30, 30, 0.8), rgba(20, 20, 20, 0.9));
       position: relative;
       overflow: hidden;
@@ -202,6 +205,38 @@
       font-size: 0.95rem;
       margin-bottom: 32px;
       flex-grow: 1;
+    }
+
+    .app-meta {
+      display: grid;
+      gap: 8px;
+      margin-bottom: 24px;
+      padding: 14px 16px;
+      border-radius: 14px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--border-glass);
+    }
+
+    .app-meta-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: center;
+      font-size: 0.88rem;
+    }
+
+    .app-meta-label {
+      color: var(--text-muted);
+    }
+
+    .app-meta-value {
+      color: var(--text);
+      font-weight: 600;
+    }
+
+    .app-meta-value.loading {
+      color: var(--text-muted);
+      font-weight: 500;
     }
 
     /* Buttons */
@@ -275,6 +310,10 @@
     }
 
     @media (max-width: 768px) {
+      .grid-two {
+        grid-template-columns: 1fr;
+      }
+
       .btn-row {
         flex-direction: column;
       }
@@ -296,18 +335,28 @@
 
     <div class="container">
       <h2 class="section-title" data-ja="Windows アプリケーション" data-en="Windows Applications">Windows Applications</h2>
-      <div class="grid" style="margin-bottom: 64px;">
+      <div class="grid grid-two" style="margin-bottom: 64px;">
         <article class="card">
           <div class="card-header">
             <h3 class="app-title">Viewer3776win</h3>
             <span class="badge windows">Windows</span>
           </div>
           <p class="app-desc" data-ja="Windows標準機能だけで構築された、超軽量で汎用性の高いファイルビューア。画像、PDF、動画、音声、HTML、RTFなど多種多様なフォーマットを単一の実行ファイルで瞬時に開くことができます。インストール不要で動作します。" data-en="An ultra-lightweight, versatile file viewer built using standard Windows APIs. Instantly open images, PDFs, media, HTML, RTF, and more with a single standalone executable. No installation required.">An ultra-lightweight, versatile file viewer built using standard Windows APIs. Instantly open images, PDFs, media, HTML, RTF, and more with a single standalone executable. No installation required.</p>
+          <div class="app-meta" id="viewer3776winReleaseCard">
+            <div class="app-meta-row">
+              <span class="app-meta-label" data-ja="最新版" data-en="Latest">Latest</span>
+              <span class="app-meta-value loading" data-release-version>Loading...</span>
+            </div>
+            <div class="app-meta-row">
+              <span class="app-meta-label" data-ja="公開日" data-en="Published">Published</span>
+              <span class="app-meta-value loading" data-release-date>Loading...</span>
+            </div>
+          </div>
           <div class="btn-group">
-            <a href="https://github.com/Lab3776/viewer3776win-downloads/releases/latest/download/Viewer3776win.zip" class="btn btn-win" data-ja="ダウンロード (.zip)" data-en="Download (.zip)">Download (.zip)</a>
+            <a href="viewer3776win/" class="btn btn-win" data-ja="詳細ページを見る" data-en="View Details">View Details</a>
             <div class="btn-row">
-              <a href="viewer3776win/privacy-policy.html" class="btn btn-secondary" data-ja="プライバシーポリシー" data-en="Privacy Policy">Privacy Policy</a>
-              <a href="viewer3776win/oss-licenses.html" class="btn btn-secondary" data-ja="OSS ライセンス" data-en="OSS Licenses">OSS Licenses</a>
+              <a href="https://github.com/Lab3776/viewer3776win-downloads/releases/latest/download/Viewer3776win.zip" class="btn btn-secondary" data-ja="ダウンロード (.zip)" data-en="Download (.zip)">Download (.zip)</a>
+              <a href="https://github.com/Lab3776/viewer3776win-downloads/releases" class="btn btn-secondary" data-ja="更新履歴" data-en="Release Notes">Release Notes</a>
             </div>
           </div>
         </article>
@@ -382,10 +431,13 @@
     <p>&copy; Lab 3776. All rights reserved.</p>
   </footer>
 
+  <script src="release-feed.js"></script>
   <script>
     (function(){
       const toggleBtn = document.getElementById('langToggle');
       const elements = document.querySelectorAll('[data-en][data-ja]');
+      const releaseVersion = document.querySelector('[data-release-version]');
+      const releaseDate = document.querySelector('[data-release-date]');
       
       // Auto detect user language, default to 'en', but use localStorage if set
       let currentLang = localStorage.getItem('lab3776_lang');
@@ -399,13 +451,47 @@
         });
         toggleBtn.textContent = lang === 'ja' ? '🌐 JP' : '🌐 EN';
         document.documentElement.lang = lang;
+        if (releaseDate && releaseDate.dataset.isoDate) {
+          releaseDate.textContent = window.Lab3776ReleaseFeed.formatPublishedDate(releaseDate.dataset.isoDate, lang);
+          releaseDate.classList.remove('loading');
+        }
+      }
+
+      async function loadViewerRelease() {
+        if (!releaseVersion || !releaseDate || !window.Lab3776ReleaseFeed) {
+          return;
+        }
+
+        try {
+          const release = await window.Lab3776ReleaseFeed.fetchLatestRelease({
+            owner: 'Lab3776',
+            repo: 'viewer3776win-downloads',
+            assetName: 'Viewer3776win.zip',
+            summaryCount: 3
+          });
+
+          releaseVersion.textContent = release.tagName || release.title || 'Latest';
+          releaseVersion.classList.remove('loading');
+          releaseDate.dataset.isoDate = release.publishedAt || '';
+          releaseDate.textContent = window.Lab3776ReleaseFeed.formatPublishedDate(release.publishedAt, currentLang);
+          releaseDate.classList.remove('loading');
+        } catch (error) {
+          releaseVersion.textContent = 'GitHub';
+          releaseVersion.classList.remove('loading');
+          releaseDate.textContent = currentLang === 'ja' ? 'Release ページで確認' : 'See Release page';
+          releaseDate.classList.remove('loading');
+        }
       }
 
       // Initialize
       if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', () => updateLanguage(currentLang));
+        document.addEventListener('DOMContentLoaded', () => {
+          updateLanguage(currentLang);
+          loadViewerRelease();
+        });
       } else {
         updateLanguage(currentLang);
+        loadViewerRelease();
       }
 
       // Toggle event
