@@ -309,6 +309,34 @@
       font-size: 0.875rem;
     }
 
+    .footer-links {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      margin-top: 12px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .footer-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--text-muted);
+      transition: color 0.2s ease;
+    }
+
+    .footer-link:hover {
+      color: var(--text);
+    }
+
+    .footer-link svg {
+      width: 16px;
+      height: 16px;
+      fill: currentColor;
+      flex: 0 0 auto;
+    }
+
     @media (max-width: 768px) {
       .grid-two {
         grid-template-columns: 1fr;
@@ -429,6 +457,14 @@
 
   <footer>
     <p>&copy; Lab 3776. All rights reserved.</p>
+    <div class="footer-links">
+      <a href="https://x.com/Lab3776" class="footer-link" target="_blank" rel="noopener noreferrer" aria-label="X / @Lab3776">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M18.244 2H21.5l-7.117 8.134L22.75 22h-6.553l-5.13-7.12L4.84 22H1.58l7.61-8.7L1.25 2h6.72l4.636 6.443L18.244 2Zm-1.141 18h1.804L6.99 3.896H5.055L17.103 20Z"/>
+        </svg>
+        <span data-ja="@Lab3776" data-en="@Lab3776">@Lab3776</span>
+      </a>
+    </div>
   </footer>
 
   <script src="release-feed.js"></script>
